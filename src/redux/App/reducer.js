@@ -2,6 +2,7 @@ import * as types from "./../../config/actionType";
 
 const initState = {
   isLoading: false,
+  listMovie: [],
   search: {
     title: "",
   },
@@ -13,6 +14,11 @@ export default (state = initState, action) => {
       return {
         ...state,
         isLoading: action.isLoading,
+      };
+    case types.GET_MOVIE_SUCCESS:
+      return {
+        ...state,
+        listMovie: action.payload,
       };
     case types.HANDLE_STATE:
       return {

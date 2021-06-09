@@ -8,9 +8,10 @@ body {
 
 .topbar-title {
   flex-grow: 1;
-  // margin-left: 20px;
+  margin: 0 20px 20px 0;
   font-family: "Staatliches";
   font-size: 50px;
+  border-bottom: 1px solid rgb(255, 41, 112);
 }
 
 .img-list {
@@ -22,4 +23,8 @@ body {
   padding: 0%;
 }
 
-
+.input {
+  height: 45px;
+  border-radius: 6px !important;
+  font-size: 15px;
+}

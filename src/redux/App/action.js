@@ -7,6 +7,12 @@ export const setLoader = (isLoading) => {
   };
 };
 
+export const getMovie = () => {
+  return {
+    type: types.GET_MOVIE,
+  };
+};
+
 export const handleState = (field, value) => {
   return {
     type: types.HANDLE_STATE,
@@ -14,3 +20,11 @@ export const handleState = (field, value) => {
     value,
   };
 };
+
+const allFunctionApp = {
+  setLoader,
+  getMovie,
+  handleState,
+};
+
+export default allFunctionApp;
