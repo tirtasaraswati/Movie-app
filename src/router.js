@@ -1,15 +1,10 @@
 import React, { lazy, Suspense } from "react";
-import {
-  Route,
-  Redirect,
-  BrowserRouter as Router,
-  Switch,
-} from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
 import { PUBLIC_ROUTE } from "./route.constants.js";
 import Loader from "../src/components/loader";
 import { useSelector } from "react-redux";
-import { Spin, Space } from "antd";
+import { Spin } from "antd";
 import ErrorBoundary from "./ErrorBoundary";
 
 const publicRoutes = [

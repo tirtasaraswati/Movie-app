@@ -21,10 +21,26 @@ export const handleState = (field, value) => {
   };
 };
 
+export const getPoster = (value) => {
+  return {
+    type: types.GET_POSTER,
+    value,
+  };
+};
+
+export const getDetail = (value) => {
+  return {
+    type: types.GET_DETAIL,
+    value,
+  };
+};
+
 const allFunctionApp = {
   setLoader,
   getMovie,
   handleState,
+  getPoster,
+  getDetail,
 };
 
 export default allFunctionApp;

@@ -2,10 +2,13 @@ import * as types from "./../../config/actionType";
 
 const initState = {
   isLoading: false,
+  isResponse: "",
+  poster: "",
   listMovie: [],
   search: {
     title: "",
   },
+  dataDetail: {},
 };
 
 export default (state = initState, action) => {
@@ -19,6 +22,7 @@ export default (state = initState, action) => {
       return {
         ...state,
         listMovie: action.payload,
+        isResponse: action.isResponse,
       };
     case types.HANDLE_STATE:
       return {
@@ -27,6 +31,17 @@ export default (state = initState, action) => {
           ...state.search,
           [action.field]: action.value,
         },
+      };
+    case types.GET_POSTER_SUCCESS:
+      return {
+        ...state,
+        poster: action.payload,
+        isPoster: action.isPoster,
+      };
+    case types.GET_DETAIL_SUCCESS:
+      return {
+        ...state,
+        dataDetail: action.payload,
       };
     default:
       return state;

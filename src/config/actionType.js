@@ -4,3 +4,7 @@ export const SET_LOADER = "SET_LOADER";
 export const GET_MOVIE = "GET_MOVIE";
 export const GET_MOVIE_SUCCESS = "GET_MOVIE_SUCCESS";
 export const HANDLE_STATE = "HANDLE_STATE";
+export const GET_POSTER = "GET_POSTER";
+export const GET_POSTER_SUCCESS = "GET_POSTER_SUCCESS";
+export const GET_DETAIL = "GET_DETAIL";
+export const GET_DETAIL_SUCCESS = "GET_DETAIL_SUCCESS";
