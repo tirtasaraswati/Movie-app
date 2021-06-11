@@ -43,7 +43,6 @@ export function* getMovie(action) {
 export function* getPoster(action) {
   try {
     yield put(setLoader(true));
-    const state = yield select(getState);
     let blob = yield call(
       GET_BLOB,
       BASE_URL_API_POSTER + action.value.imdbID,
@@ -67,7 +66,6 @@ export function* getPoster(action) {
 export function* getDetail(action) {
   try {
     yield put(setLoader(true));
-    const state = yield select(getState);
     let data = yield call(
       GET,
       BASE_URL_API + action.value.Title + "&i=" + action.value.imdbID,

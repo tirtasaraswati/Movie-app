@@ -22,6 +22,7 @@ export default function () {
 
   let onSearch = useCallback(() => {
     dispatch(getMovie(page));
+    setPage(2);
   }, [dispatch]);
 
   useEffect(() => {
@@ -58,15 +59,12 @@ export default function () {
   return (
     <div className="margin">
       <Row gutter={16}>
-        <Col span={18} xl={18} lg={18} md={24} s={24}>
+        <Col span={18} xl={18} lg={18} md={24} s={24} xs={24}>
           <div className="topbar-title">BillionViews</div>
         </Col>
-        <Col span={6} xl={6} lg={6} md={24} s={24}>
+        <Col span={6} xl={6} lg={6} md={24} s={24} xs={24}>
           <Form form={form} onFinish={onSearch}>
-            <Form.Item
-              name="title"
-              rules={[{ required: true, message: "Required to fill!" }]}
-            >
+            <Form.Item name="title">
               <Input.Search
                 className="input"
                 placeholder="Search keyword"
@@ -93,7 +91,7 @@ export default function () {
           {state.listMovie.map((list, idx) => {
             if (state.listMovie.length === idx + 1) {
               return (
-                <Col span={8} xl={8} lg={12} md={12} s={24}>
+                <Col span={8} xl={8} lg={12} md={12} s={24} xs={24}>
                   <Card
                     hoverable
                     style={{ width: 240, marginBottom: "30px" }}
@@ -123,7 +121,7 @@ export default function () {
               );
             } else {
               return (
-                <Col span={4} xl={4} lg={4} md={12} s={24}>
+                <Col span={4} xl={4} lg={4} md={12} s={24} xs={24}>
                   <Card
                     hoverable
                     style={{ width: 240, marginBottom: "30px" }}

@@ -2,9 +2,18 @@ import React from "react";
 import "../assets/index.scss";
 
 export default function () {
-  var dataArr = ["kita", "atik", "tika", "aku", "kia", "makan", "kua"];
-  var idx = 0;
+  const dataArr = ["kita", "atik", "tika", "aku", "kia", "makan", "kua"];
   const found = [];
+  const uniqueArray = [];
+
+  const uniqueDataArr = (arr) => {
+    for (var i = 0; i < arr.length; i++) {
+      if (uniqueArray.indexOf(arr[i]) === -1) {
+        uniqueArray.push(arr[i]);
+      }
+    }
+    return uniqueArray;
+  };
 
   let anagram = (word, arr) => {
     arr.forEach((item) => {
@@ -35,18 +44,19 @@ export default function () {
       const joinWord = isWord.join("");
       if (joinItem === joinWord) {
         found.push(item);
-        idx += 1;
       }
     });
-    return found;
+    uniqueDataArr(found);
+    return uniqueArray;
   };
-
-  anagram(dataArr[idx], dataArr);
 
   return (
     <div>
       <h1>Anagram Test Case</h1>
-      <div>{found}</div>
+      {dataArr.forEach((item, idx, array) => {
+        anagram(array[idx], dataArr);
+      })}
+      <div>{uniqueArray.toString()}</div>
     </div>
   );
 }
