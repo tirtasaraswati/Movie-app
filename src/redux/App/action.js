@@ -7,9 +7,10 @@ export const setLoader = (isLoading) => {
   };
 };
 
-export const getMovie = () => {
+export const getMovie = (page) => {
   return {
     type: types.GET_MOVIE,
+    page,
   };
 };
 

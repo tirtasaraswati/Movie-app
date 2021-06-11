@@ -8,15 +8,30 @@ const BASE_URL_API_POSTER = "http://img.omdbapi.com/?apikey=faf7e5bb&i=";
 const { setLoader } = action;
 const getState = (state) => state.App;
 
-export function* getMovie() {
+export function* getMovie(action) {
   try {
     yield put(setLoader(true));
     const state = yield select(getState);
-    let data = yield call(GET, BASE_URL_API + state.search.title + "&y=", {});
+    let data;
+    let listData = [];
+    if (state.search.title === "") {
+      return (data = []);
+    } else {
+      data = yield call(
+        GET,
+        BASE_URL_API + state.search.title + "&page=" + action.page,
+        {}
+      );
+    }
+    if (data.Search !== undefined) {
+      listData = [...state.listMovie, ...data.Search];
+    }
     yield put({
       type: types.GET_MOVIE_SUCCESS,
-      payload: data.Search,
-      isResponse: data.Response.toLowerCase(),
+      payload: listData,
+      isResponse: data.Response.toLowerCase() === "false" ? false : true,
+      isError: data.Error !== undefined ? data.Error : "No Data",
+      isMore: data.Search.length > 5 ? true : false,
     });
     yield put(setLoader(false));
   } catch (error) {

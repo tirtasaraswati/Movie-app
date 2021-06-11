@@ -2,12 +2,14 @@ import * as types from "./../../config/actionType";
 
 const initState = {
   isLoading: false,
-  isResponse: "",
+  isResponse: false,
+  isError: "No Data",
   poster: "",
   listMovie: [],
   search: {
     title: "",
   },
+  isMore: false,
   dataDetail: {},
 };
 
@@ -23,6 +25,8 @@ export default (state = initState, action) => {
         ...state,
         listMovie: action.payload,
         isResponse: action.isResponse,
+        isError: action.isError,
+        isMore: action.isMore,
       };
     case types.HANDLE_STATE:
       return {

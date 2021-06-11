@@ -1,19 +1,7 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  Row,
-  Col,
-  Card,
-  Modal,
-  Input,
-  Form,
-  Select,
-  DatePicker,
-  Button,
-  Empty,
-} from "antd";
-import { AudioOutlined } from "@ant-design/icons";
+import { Row, Col, Card, Modal, Input, Form, Empty } from "antd";
 import allFunctionApp, { getPoster } from "../redux/App/action";
 import "antd/dist/antd.css";
 import "../assets/index.scss";
@@ -22,8 +10,10 @@ const { getMovie, handleState, getDetail } = allFunctionApp;
 
 export default function () {
   const dispatch = useDispatch();
+  const observer = useRef();
+  const history = useHistory();
   const state = useSelector((state) => state.App);
-  let history = useHistory();
+  const [page, setPage] = useState(1);
   const [isShowModal, setShowModal] = useState(false);
   const showModal = () => setShowModal(!isShowModal);
 
@@ -31,8 +21,12 @@ export default function () {
   const [form] = Form.useForm();
 
   let onSearch = useCallback(() => {
-    dispatch(getMovie());
+    dispatch(getMovie(page));
   }, [dispatch]);
+
+  useEffect(() => {
+    state.listMovie = [];
+  }, [state.search.title]);
 
   const showPoster = (id, row) => {
     dispatch(getPoster(row));
@@ -45,6 +39,22 @@ export default function () {
     dispatch(getDetail(row));
     history.push("/moviedetail/" + row.imdbID);
   };
+
+  const lastMovieRef = useCallback(
+    (lastData) => {
+      if (state.isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && state.isMore) {
+          setPage((prevPage) => prevPage + 1);
+          dispatch(getMovie(page));
+        }
+      });
+      if (lastData) observer.current.observe(lastData);
+    },
+    [dispatch, state.isLoading, state.isMore]
+  );
+
   return (
     <div className="margin">
       <Row gutter={16}>
@@ -72,42 +82,76 @@ export default function () {
           </Form>
         </Col>
       </Row>
-      {state.isResponse === "false" ? (
+      {state.isResponse === false ? (
         <Row>
-          <div style={{ textAlign: "center" }}>
-            <Empty description={false} />
-          </div>
+          <Col span={24}>
+            <Empty description={state.isError} />
+          </Col>
         </Row>
       ) : (
-        <Row gutter={24} className="mt-25 mb-20">
-          {state.listMovie.map((list, idx) => (
-            <Col span={4}>
-              <Card
-                hoverable
-                style={{ width: 240, marginBottom: "30px" }}
-                cover={
-                  <img
-                    className="img-list"
-                    alt={list.Title}
-                    src={list.Poster}
-                    onClick={(e) => showPoster(e, list)}
-                  />
-                }
-              >
-                <Meta
-                  className="text-center"
-                  title={
-                    <a
-                      // href="#"
-                      onClick={(e) => handleDetail(e, list)}
-                    >
-                      {list.Title}
-                    </a>
-                  }
-                />
-              </Card>
-            </Col>
-          ))}
+        <Row gutter={24}>
+          {state.listMovie.map((list, idx) => {
+            if (state.listMovie.length === idx + 1) {
+              return (
+                <Col span={4}>
+                  <Card
+                    hoverable
+                    style={{ width: 240, marginBottom: "30px" }}
+                    cover={
+                      <img
+                        className="img-list"
+                        alt={list.Title}
+                        src={list.Poster}
+                        onClick={(e) => showPoster(e, list)}
+                      />
+                    }
+                  >
+                    <Meta
+                      className="text-center"
+                      title={
+                        <div
+                          ref={lastMovieRef}
+                          key={list}
+                          onClick={(e) => handleDetail(e, list)}
+                        >
+                          {list.Title}
+                        </div>
+                      }
+                    />
+                  </Card>
+                </Col>
+              );
+            } else {
+              return (
+                <Col span={4}>
+                  <Card
+                    hoverable
+                    style={{ width: 240, marginBottom: "30px" }}
+                    cover={
+                      <img
+                        className="img-list"
+                        alt={list.Title}
+                        src={list.Poster}
+                        onClick={(e) => showPoster(e, list)}
+                      />
+                    }
+                  >
+                    <Meta
+                      className="text-center"
+                      title={
+                        <a
+                          // href="#"
+                          onClick={(e) => handleDetail(e, list)}
+                        >
+                          {list.Title}
+                        </a>
+                      }
+                    />
+                  </Card>
+                </Col>
+              );
+            }
+          })}
         </Row>
       )}
 
