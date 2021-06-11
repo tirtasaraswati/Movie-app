@@ -5,6 +5,9 @@ export default function () {
   const dataArr = ["kita", "atik", "tika", "aku", "kia", "makan", "kua"];
   const found = [];
   const uniqueArray = [];
+  var data1 = [];
+  var data2 = [];
+  var data3 = [];
 
   const uniqueDataArr = (arr) => {
     for (var i = 0; i < arr.length; i++) {
@@ -12,7 +15,10 @@ export default function () {
         uniqueArray.push(arr[i]);
       }
     }
-    return uniqueArray;
+    data1 = uniqueArray.splice(0, 3);
+    data2 = uniqueArray.splice(3, 2);
+    data3 = uniqueArray.splice(5, 6);
+    return data1, data2, data3;
   };
 
   let anagram = (word, arr) => {
@@ -33,7 +39,6 @@ export default function () {
 
         return array;
       };
-
       const newItem = item.split("");
       const newWord = word.split("");
 
@@ -47,7 +52,7 @@ export default function () {
       }
     });
     uniqueDataArr(found);
-    return uniqueArray;
+    return found;
   };
 
   return (
@@ -57,6 +62,9 @@ export default function () {
         anagram(array[idx], dataArr);
       })}
       <div>{uniqueArray.toString()}</div>
+      <div>{data1.toString()}</div>
+      <div>{data2.toString()}</div>
+      <div>{data3.toString()}</div>
     </div>
   );
 }
