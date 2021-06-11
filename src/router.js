@@ -5,7 +5,6 @@ import { PUBLIC_ROUTE } from "./route.constants.js";
 import Loader from "../src/components/loader";
 import { useSelector } from "react-redux";
 import { Spin } from "antd";
-import ErrorBoundary from "./ErrorBoundary";
 
 const publicRoutes = [
   {
@@ -18,26 +17,28 @@ const publicRoutes = [
     exact: true,
     component: lazy(() => import("../src/containers/detail")),
   },
+  {
+    path: PUBLIC_ROUTE.ANAGRAM,
+    exact: true,
+    component: lazy(() => import("../src/containers/anagram")),
+  },
 ];
 
 export default function Routes() {
   let state = useSelector((state) => state.App);
   return (
-    <ErrorBoundary>
-      <Suspense fallback={<Loader />}>
-        <Router>
-          <Spin size="large" spinning={state.isLoading}>
-            {/* <ToastContainer /> */}
-            <Switch>
-              {publicRoutes.map((route, index) => (
-                <Route key={index} path={route.path} exact={route.exact}>
-                  <route.component />
-                </Route>
-              ))}
-            </Switch>
-          </Spin>
-        </Router>
-      </Suspense>
-    </ErrorBoundary>
+    <Suspense fallback={<Loader />}>
+      <Router>
+        <Spin size="large" spinning={state.isLoading}>
+          <Switch>
+            {publicRoutes.map((route, index) => (
+              <Route key={index} path={route.path} exact={route.exact}>
+                <route.component />
+              </Route>
+            ))}
+          </Switch>
+        </Spin>
+      </Router>
+    </Suspense>
   );
 }

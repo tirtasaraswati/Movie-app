@@ -34,7 +34,7 @@ export default function () {
               Detail Movie
             </div>
           </Col>
-          <Col span={5} md={5}>
+          <Col span={5} md={5} s={8}>
             <div>
               <img
                 className="img-detail"
@@ -43,7 +43,7 @@ export default function () {
               />
             </div>
           </Col>
-          <Col span={19} md={12}>
+          <Col span={12} md={12} s={17}>
             <div className="text-detail">
               <h1 style={{ borderBottom: "1px solid grey" }}>
                 {state.dataDetail.Title}
