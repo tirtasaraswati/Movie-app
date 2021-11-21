@@ -13,7 +13,7 @@ export default function () {
   const observer = useRef();
   const history = useHistory();
   const state = useSelector((state) => state.App);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(state.page);
   const [isShowModal, setShowModal] = useState(false);
   const showModal = () => setShowModal(!isShowModal);
 
@@ -26,7 +26,9 @@ export default function () {
   }, [dispatch]);
 
   useEffect(() => {
-    state.listMovie = [];
+    if (state.search.title === "") {
+      state.listMovie = [];
+    }
   }, [state.search.title]);
 
   const showPoster = (id, row) => {
@@ -159,14 +161,8 @@ export default function () {
         onCancel={showModal}
         footer={null}
       >
-        <img
-          className="img-poster"
-          // src={"data:image/jpg;base64" + state.poster}
-          src={state.poster}
-          width="400"
-        />
+        <img className="img-poster" src={state.poster} width="400" />
       </Modal>
-      {/* </Row> */}
     </div>
   );
 }

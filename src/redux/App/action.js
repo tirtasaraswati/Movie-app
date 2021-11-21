@@ -36,12 +36,20 @@ export const getDetail = (value) => {
   };
 };
 
+export const clearForm = (value) => {
+  return {
+    type: types.CLEAR_DATA_DETAIL,
+    value,
+  };
+};
+
 const allFunctionApp = {
   setLoader,
   getMovie,
   handleState,
   getPoster,
   getDetail,
+  clearForm,
 };
 
 export default allFunctionApp;

@@ -10,6 +10,7 @@ const initState = {
     title: "",
   },
   isMore: false,
+  page: 1,
   dataDetail: {},
 };
 
@@ -27,6 +28,7 @@ export default (state = initState, action) => {
         isResponse: action.isResponse,
         isError: action.isError,
         isMore: action.isMore,
+        page: action.page,
       };
     case types.HANDLE_STATE:
       return {
@@ -46,6 +48,11 @@ export default (state = initState, action) => {
       return {
         ...state,
         dataDetail: action.payload,
+      };
+    case types.CLEAR_DATA_DETAIL:
+      return {
+        ...state,
+        dataDetail: {},
       };
     default:
       return state;

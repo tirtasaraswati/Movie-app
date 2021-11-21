@@ -15,7 +15,7 @@ export function* getMovie(action) {
     let data;
     let listData = [];
     if (state.search.title === "") {
-      return (data = []);
+      return listData;
     } else {
       data = yield call(
         GET,
@@ -32,6 +32,7 @@ export function* getMovie(action) {
       isResponse: data.Response.toLowerCase() === "false" ? false : true,
       isError: data.Error !== undefined ? data.Error : "No Data",
       isMore: data.Search.length > 5 ? true : false,
+      page: action.page + 1,
     });
     yield put(setLoader(false));
   } catch (error) {
@@ -77,7 +78,6 @@ export function* getDetail(action) {
     );
 
     localStorage.setItem("Detail", JSON.stringify(dataDetail));
-
     yield put({ type: types.GET_DETAIL_SUCCESS, payload: dataDetail });
     yield put(setLoader(false));
   } catch (error) {

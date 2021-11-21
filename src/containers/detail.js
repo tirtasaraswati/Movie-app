@@ -7,7 +7,7 @@ import allFunctionApp from "../redux/App/action";
 import "antd/dist/antd.css";
 import "../assets/index.scss";
 
-const { getDetail } = allFunctionApp;
+const { getDetail, clearForm } = allFunctionApp;
 
 export default function () {
   const dispatch = useDispatch();
@@ -21,16 +21,19 @@ export default function () {
     }
   }, [dispatch]);
 
+  const onCancel = () => {
+    dispatch(clearForm());
+    history.goBack();
+    localStorage.clear();
+  };
+
   return (
     <div className="margin">
       <div className="card">
         <Row gutter={24}>
           <Col span={24}>
             <div className="title">
-              <ArrowLeftOutlined
-                className="btn-back"
-                onClick={history.goBack}
-              />
+              <ArrowLeftOutlined className="btn-back" onClick={onCancel} />
               Detail Movie
             </div>
           </Col>
